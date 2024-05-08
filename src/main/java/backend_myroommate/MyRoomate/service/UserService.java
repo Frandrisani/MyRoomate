@@ -3,6 +3,7 @@ package backend_myroommate.MyRoomate.service;
 import backend_myroommate.MyRoomate.entities.User;
 import backend_myroommate.MyRoomate.exceptions.NotFoundException;
 import backend_myroommate.MyRoomate.payloads.NewUserDTO;
+
 import backend_myroommate.MyRoomate.repository.UserDAO;
 import org.apache.coyote.BadRequestException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,12 @@ public class UserService {
 
     public User findById(long id) {
         return this.userDAO.findById(id).orElseThrow(() -> new NotFoundException("User " + id + " has not been found"));
+    }
+
+
+    public User findByEmail(String email) {
+        return this.userDAO.findByEmail(email)
+                .orElseThrow(() -> new NotFoundException("User " + email + " has not been found"));
     }
 
     public User save(NewUserDTO payload) throws BadRequestException {
