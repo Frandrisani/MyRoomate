@@ -3,8 +3,10 @@ package backend_myroommate.MyRoomate.service;
 
 import backend_myroommate.MyRoomate.entities.User;
 import backend_myroommate.MyRoomate.exceptions.BadRequestException;
+import backend_myroommate.MyRoomate.exceptions.UnauthorizedException;
 import backend_myroommate.MyRoomate.mailgun.MailgunSender;
 import backend_myroommate.MyRoomate.payloads.NewUserDTO;
+import backend_myroommate.MyRoomate.payloads.UserLoginDTO;
 import backend_myroommate.MyRoomate.repository.UserDAO;
 import backend_myroommate.MyRoomate.security.JWTTools;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +30,14 @@ public class AuthService {
 
     @Autowired
     private MailgunSender mailgunSender;
+
+    public String login(UserLoginDTO payload) {
+        User found = this.userService.findByEmail(payload.email());
+        if (!encoder.matches(payload.password(), found.getPassword()))
+            throw new UnauthorizedException("Password is wrong");
+        return jwtTools.createToken(found);
+    }
+
 
     public User register(NewUserDTO payload) {
         if (this.userDAO.existsByEmail(payload.email()))
