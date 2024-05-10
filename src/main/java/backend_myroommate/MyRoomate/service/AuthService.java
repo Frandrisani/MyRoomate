@@ -33,7 +33,9 @@ public class AuthService {
 
     public String login(UserLoginDTO payload) {
         User found = this.userService.findByEmail(payload.email());
-        if (!encoder.matches(payload.password(), found.getPassword()))
+        if (found == null){
+            throw new UnauthorizedException("User " + payload.email() + " has not been found");
+        }else if (!encoder.matches(payload.password(), found.getPassword()))
             throw new UnauthorizedException("Password is wrong");
         return jwtTools.createToken(found);
     }
