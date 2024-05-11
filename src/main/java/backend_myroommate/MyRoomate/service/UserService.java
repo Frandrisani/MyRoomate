@@ -15,6 +15,9 @@ public class UserService {
     private UserDAO userDAO;
 
 
+
+
+
     public User findById(long id) {
         return this.userDAO.findById(id).orElseThrow(() -> new NotFoundException("User " + id + " has not been found"));
     }
