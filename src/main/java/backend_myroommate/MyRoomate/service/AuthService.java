@@ -44,7 +44,7 @@ public class AuthService {
     public User register(NewUserDTO payload) {
         if (this.userDAO.existsByEmail(payload.email()))
             throw new BadRequestException("Email " + payload.email() + " is already taken");
-        User newUser = new User(payload.firstName(), payload.lastName(), payload.phoneNumber(), payload.email(), payload.birthdate(), payload.gender(), payload.usage(), encoder.encode(payload.password()));
+        User newUser = new User(payload.firstName(), payload.lastName(), payload.phoneNumber(), payload.email(), payload.birthdate(), payload.cityOfBirth(), payload.countryOfBirth(),payload.gender(), payload.usage(), encoder.encode(payload.password()));
         mailgunSender.sendRegistrationEmail(newUser);
         return this.userDAO.save(newUser);
     }

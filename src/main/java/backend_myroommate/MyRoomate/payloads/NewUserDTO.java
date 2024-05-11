@@ -23,9 +23,13 @@ public record NewUserDTO(
         @NotEmpty(message = "Birthdate is mandatory")
         String birthdate,
 
-        int gender,
+        String gender,
+        @NotEmpty(message = "Birthdate is mandatory")
+        String cityOfBirth,
+        @NotEmpty(message = "Birthdate is mandatory")
+        String countryOfBirth,
 
-        int usage,
+        String usage,
 
         @NotEmpty(message = "Password is mandatory")
         @Size(min = 6, message = "Password must be longer than 6 chars")
