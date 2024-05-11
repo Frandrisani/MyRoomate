@@ -2,6 +2,7 @@ package backend_myroommate.MyRoomate.entities;
 
 
 import backend_myroommate.MyRoomate.enums.UserRole;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
@@ -15,10 +16,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.time.LocalDate;
 import java.time.Period;
 import java.time.format.DateTimeFormatter;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Entity
 @Getter
@@ -37,8 +35,8 @@ public class User implements UserDetails {
     private String email;
     private String birthdate;
     private int age;
-    private int gender;
-    private int usage;
+    private String gender;
+    private String usage;
     private String password;
     private String avatar;
     @Enumerated(EnumType.STRING)
@@ -50,18 +48,22 @@ public class User implements UserDetails {
     private String hobby;
     private String zodiacSign;
     private String cityOfBirth;
+    private String countryOfBirth;
     private String cohabitationPreferences;
     private String instagram;
 
-    @OneToOne(mappedBy = "user")
-    private Room room;
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @JsonIgnore
+    private List<Room> rooms = new ArrayList<>();
 
-    public User(String firstName, String lastName, String phoneNumber, String email, String birthdate, int gender, int usage, String password) {
+    public User(String firstName, String lastName, String phoneNumber, String email, String birthdate, String cityOfBirth, String countryOfBirth,String gender, String usage, String password) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.phoneNumber = phoneNumber;
         this.email = email;
         this.birthdate = birthdate;
+        this.cityOfBirth = cityOfBirth;
+        this.countryOfBirth = countryOfBirth;
         setAge(this.birthdate);
         this.gender = gender;
         this.usage = usage;

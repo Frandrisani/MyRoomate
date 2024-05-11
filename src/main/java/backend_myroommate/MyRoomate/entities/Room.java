@@ -1,6 +1,7 @@
 package backend_myroommate.MyRoomate.entities;
 
 import backend_myroommate.MyRoomate.enums.TypeRoom;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
@@ -8,8 +9,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -35,12 +36,13 @@ public class Room {
     private TypeRoom type;
     private String image;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "user_id")
+    @JsonIgnore
     private User user;
 
     @OneToMany(mappedBy = "roomcoinquilino")
-    private Set<Roommate> coinquilinoRooms = new HashSet<>();
+    private List<Roommate> coinquilinoRooms = new ArrayList<>();
 
     // Constructor
     public Room(String title, String description, double price, String address, String city, String zipCode, int roommates, int wc, TypeRoom type, String image) {
