@@ -46,11 +46,9 @@ public class User implements UserDetails {
     private String bio;
     private String occupation;
     private String hobby;
-    private String zodiacSign;
     private String cityOfBirth;
     private String countryOfBirth;
     private String cohabitationPreferences;
-    private String instagram;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     @JsonIgnore
