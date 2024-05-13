@@ -12,6 +12,9 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
 
 @RestController
 @RequestMapping("/users")
@@ -47,6 +50,11 @@ public class UserController {
     public ResponseEntity<User> editInfo(@PathVariable long userId, @RequestBody @Validated editUserInfoDTO payload) {
         User updatedUser = userService.editInfo(userId, payload);
         return ResponseEntity.ok(updatedUser);
+    }
+    @PostMapping("/upload")
+    public User uploadAvatar(@RequestParam("avatar") MultipartFile image,
+                                @AuthenticationPrincipal User currentUser) throws IOException {
+        return this.userService.uploadImage(image, currentUser.getId());
     }
 
     @DeleteMapping("/{userId}")
