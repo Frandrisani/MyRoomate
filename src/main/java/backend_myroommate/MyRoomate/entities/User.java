@@ -44,7 +44,6 @@ public class User implements UserDetails {
 
     //Altri attributi
     private String bio;
-    private String occupation;
     private String hobby;
     private String cityOfBirth;
     private String countryOfBirth;
