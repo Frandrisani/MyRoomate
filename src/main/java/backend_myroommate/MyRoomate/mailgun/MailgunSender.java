@@ -27,8 +27,8 @@ public class MailgunSender {
                 .basicAuth("api", this.apiKey)
                 .queryString("from", this.email)
                 .queryString("to", user.getEmail())
-                .queryString("subject", "Registrazione Completata!")
-                .queryString("text", "Grazie " + user.getFirstName() + " per esserti registrato!")
+                .queryString("subject", "MyRoommate: registrazione completata. ")
+                .queryString("text", "Benvenuta/o a bordo" + user.getFirstName() + " e grazie per esserti registrato! Ora fai subito il login e inizia ad esplorare le offerte o inserisci un annuncio")
                 .asJson();
         System.out.println(response.getBody());
         } catch (Exception e) {

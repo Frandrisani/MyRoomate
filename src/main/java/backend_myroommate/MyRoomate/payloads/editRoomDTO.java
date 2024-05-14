@@ -1,9 +1,10 @@
 package backend_myroommate.MyRoomate.payloads;
+
 import backend_myroommate.MyRoomate.enums.TypeRoom;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 
-public record NewRoomDTO(
+public record editRoomDTO(
         @NotEmpty(message = "Title is mandatory")
         String title,
 
@@ -25,9 +26,13 @@ public record NewRoomDTO(
         @NotNull(message = "Price is mandatory")
         int roommates,
 
-        @NotNull(message = "Number of bathrooms is mandatory")
+        @NotEmpty(message = "Number of bathrooms is mandatory")
         int wc,
 
+        @NotEmpty(message = "Type is mandatory")
+        TypeRoom type,
 
-        TypeRoom type
-) {}
+        @NotEmpty(message = "Number of rooms is mandatory")
+        String rooms
+        ) {
+}

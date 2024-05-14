@@ -45,7 +45,7 @@ public class Room {
     private List<Roommate> coinquilinoRooms = new ArrayList<>();
 
     // Constructor
-    public Room(String title, String description, double price, String address, String city, String zipCode, int roommates, int wc, TypeRoom type, String image) {
+    public Room(String title, String description, double price, String address, String city, String zipCode, int roommates, int wc, TypeRoom type) {
         this.title = title;
         this.description = description;
         this.price = price;
@@ -55,6 +55,5 @@ public class Room {
         this.roommates = roommates;
         this.wc = wc;
         this.type = type;
-        this.image = image;
     }
 }
