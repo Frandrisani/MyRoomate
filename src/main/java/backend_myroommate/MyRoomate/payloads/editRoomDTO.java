@@ -30,9 +30,6 @@ public record editRoomDTO(
         int wc,
 
         @NotEmpty(message = "Type is mandatory")
-        TypeRoom type,
-
-        @NotEmpty(message = "Number of rooms is mandatory")
-        String rooms
+        TypeRoom type
         ) {
 }

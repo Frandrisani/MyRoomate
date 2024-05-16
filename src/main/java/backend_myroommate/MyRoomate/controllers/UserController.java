@@ -1,8 +1,10 @@
 package backend_myroommate.MyRoomate.controllers;
 
+import backend_myroommate.MyRoomate.entities.Room;
 import backend_myroommate.MyRoomate.entities.User;
 import backend_myroommate.MyRoomate.exceptions.UnauthorizedException;
 import backend_myroommate.MyRoomate.payloads.*;
+import backend_myroommate.MyRoomate.service.RoomService;
 import backend_myroommate.MyRoomate.service.UserService;
 import org.apache.coyote.BadRequestException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.List;
 
 @RestController
 @RequestMapping("/users")
@@ -22,6 +25,9 @@ public class UserController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private RoomService roomService;
 
     @GetMapping("/me")
     public User findMe(@AuthenticationPrincipal User currentUser) {

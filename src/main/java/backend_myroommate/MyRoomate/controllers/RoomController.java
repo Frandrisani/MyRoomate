@@ -25,26 +25,35 @@ public class RoomController {
     @Autowired
     private UserService userService;
 
-    // Metodo che ottiene tutte le stanze
+    // TUTTI GLI ANNUNCI
     @GetMapping
     public ResponseEntity<List<Room>> getAllRooms() {
         List<Room> rooms = roomService.findAll();
         return new ResponseEntity<>(rooms, HttpStatus.OK);
     }
 
-    // Metodo che ottiene le stanze per città
+    // UN PRECISO ANNUNCIO
+    @GetMapping("/{id}")
+    public ResponseEntity<Room> getRoomById(@PathVariable long id) {
+        Room room = roomService.findById(id);
+        return ResponseEntity.ok(room);
+    }
+
+    // GLI ANNUNCI IN BASE ALLA CITTA' DOVE RISIEDE LA STANZA
     @GetMapping(params = "city")
     public ResponseEntity<List<Room>> getRoomsByCity(@RequestParam String city) {
         List<Room> rooms = roomService.findAllByCity(city);
         return new ResponseEntity<>(rooms, HttpStatus.OK);
     }
 
+    // GLI ANNUNCI IN BASE ALL'ID DELL'USER CHE GLI HA PUBBLICATI
     @GetMapping("/user/{userId}")
     public ResponseEntity<List<Room>> getRoomsByUserId(@PathVariable long userId) {
         List<Room> rooms = roomService.findAllByUserId(userId);
         return ResponseEntity.ok(rooms);
     }
 
+    // CREA UN NUOVO ANNUNCIO
     @PostMapping("/create/{userIdRoom}")
     public ResponseEntity<Room> createRoom(@PathVariable long userIdRoom,
                                            @Validated @RequestBody NewRoomDTO newRoomDTO) throws IOException {
@@ -54,6 +63,7 @@ public class RoomController {
         return ResponseEntity.status(HttpStatus.CREATED).body(createdRoom);
     }
 
+    // MODIFICA ANNUNCIO
     @PutMapping("/{roomId}")
     public ResponseEntity<Room> updateRoom(@PathVariable long roomId,
                                            @RequestBody editRoomDTO editRoomDTO) {
@@ -61,6 +71,7 @@ public class RoomController {
         return ResponseEntity.ok(updatedRoom);
     }
 
+    // AGGIUNGI O MODIFICA IMMAGINE
     @PutMapping("/{roomId}/image")
     public ResponseEntity<Room> updateRoomImage(@PathVariable long roomId,
                                                 @RequestParam("image") MultipartFile image) throws IOException {
@@ -68,10 +79,13 @@ public class RoomController {
         return ResponseEntity.ok(updatedRoom);
     }
 
+    // CANCELLA ANNUNCIO
     @DeleteMapping("/{roomId}")
     public ResponseEntity<Void> deleteRoom(@PathVariable long roomId) {
         roomService.deleteRoom(roomId);
         return ResponseEntity.noContent().build();
     }
+
+
 
 }

@@ -1,9 +1,11 @@
 package backend_myroommate.MyRoomate.service;
 
+import backend_myroommate.MyRoomate.entities.Room;
 import backend_myroommate.MyRoomate.entities.User;
 import backend_myroommate.MyRoomate.exceptions.NotFoundException;
 import backend_myroommate.MyRoomate.payloads.*;
 
+import backend_myroommate.MyRoomate.repository.RoomDAO;
 import backend_myroommate.MyRoomate.repository.UserDAO;
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
@@ -18,6 +20,9 @@ import java.io.IOException;
 public class UserService {
     @Autowired
     private UserDAO userDAO;
+
+    @Autowired
+    private RoomDAO roomDAO;
 
     @Autowired
     private Cloudinary cloudinary;
@@ -68,4 +73,6 @@ public class UserService {
         User user = findById(userId);
         this.userDAO.delete(user);
     }
+
+
 }

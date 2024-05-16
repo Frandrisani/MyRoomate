@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 @Entity
@@ -43,6 +44,10 @@ public class Room {
 
     @OneToMany(mappedBy = "roomcoinquilino")
     private List<Roommate> coinquilinoRooms = new ArrayList<>();
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "room",  fetch = FetchType.EAGER)
+    private List<FavoriteRoom> favoriteRooms = new ArrayList<>();
 
     // Constructor
     public Room(String title, String description, double price, String address, String city, String zipCode, int roommates, int wc, TypeRoom type) {

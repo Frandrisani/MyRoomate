@@ -49,9 +49,13 @@ public class User implements UserDetails {
     private String countryOfBirth;
     private String cohabitationPreferences;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     @JsonIgnore
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Room> rooms = new ArrayList<>();
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "user",  fetch = FetchType.EAGER)
+    private List<FavoriteRoom> favoriteRooms = new ArrayList<>();
 
     public User(String firstName, String lastName, String phoneNumber, String email, String birthdate, String cityOfBirth, String countryOfBirth,String gender, String usage, String password) {
         this.firstName = firstName;
