@@ -1,5 +1,6 @@
 package backend_myroommate.MyRoomate.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.*;
@@ -22,6 +23,7 @@ public class Roommate {
 
     @ManyToOne
     @JoinColumn(name = "room_id")
+    @JsonBackReference
     private Room roomcoinquilino;
 
 }

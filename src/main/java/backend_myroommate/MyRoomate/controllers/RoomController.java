@@ -1,10 +1,14 @@
 package backend_myroommate.MyRoomate.controllers;
 
 import backend_myroommate.MyRoomate.entities.Room;
+import backend_myroommate.MyRoomate.entities.User;
+import backend_myroommate.MyRoomate.mailgun.MailgunSender;
 import backend_myroommate.MyRoomate.payloads.NewRoomDTO;
 import backend_myroommate.MyRoomate.payloads.editRoomDTO;
 import backend_myroommate.MyRoomate.service.RoomService;
 import backend_myroommate.MyRoomate.service.UserService;
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,6 +28,9 @@ public class RoomController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private MailgunSender mailgunSender;
 
     // TUTTI GLI ANNUNCI
     @GetMapping
@@ -86,6 +93,25 @@ public class RoomController {
         return ResponseEntity.noContent().build();
     }
 
+    @PostMapping("/send-info-email")
+    public void sendInfoEmail(@RequestBody InfoEmailRequest infoEmailRequest) {
+        Room found = roomService.findById(infoEmailRequest.getRoomId());
+        User foundUser = userService.findById(infoEmailRequest.getUserId());
+        mailgunSender.sendInfoEmail(found, foundUser, infoEmailRequest.getText());
+    }
 
+    @Getter
+    @Setter
+    public static class InfoEmailRequest {
+        private Long roomId;
+        private Long userId;
+        private String firstName;
+        private String lastName;
+        private String email;
+        private String phoneNumber;
+        private String text;
+
+        // getter e setter
+    }
 
 }

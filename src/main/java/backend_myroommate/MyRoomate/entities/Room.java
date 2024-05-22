@@ -3,6 +3,7 @@ package backend_myroommate.MyRoomate.entities;
 import backend_myroommate.MyRoomate.enums.TypeRoom;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -17,7 +18,6 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
-@JsonIgnoreProperties({"user"})
 public class Room {
     // Attributes
     @Id
@@ -31,7 +31,7 @@ public class Room {
     private String address;
     private String city;
     private String zipCode;
-    private int roommates;
+    private int bedrooms;
     private int wc;
     @Enumerated(EnumType.STRING)
     private TypeRoom type;
@@ -39,10 +39,10 @@ public class Room {
 
     @ManyToOne
     @JoinColumn(name = "user_id")
-    @JsonIgnore
     private User user;
 
-    @OneToMany(mappedBy = "roomcoinquilino")
+    @OneToMany(mappedBy = "roomcoinquilino", cascade = CascadeType.ALL)
+    @JsonManagedReference
     private List<Roommate> coinquilinoRooms = new ArrayList<>();
 
     @JsonIgnore
@@ -50,14 +50,14 @@ public class Room {
     private List<FavoriteRoom> favoriteRooms = new ArrayList<>();
 
     // Constructor
-    public Room(String title, String description, double price, String address, String city, String zipCode, int roommates, int wc, TypeRoom type) {
+    public Room(String title, String description, double price, String address, String city, String zipCode, int bedrooms, int wc, TypeRoom type) {
         this.title = title;
         this.description = description;
         this.price = price;
         this.address = address;
         this.city = city;
         this.zipCode = zipCode;
-        this.roommates = roommates;
+        this.bedrooms = bedrooms;
         this.wc = wc;
         this.type = type;
     }

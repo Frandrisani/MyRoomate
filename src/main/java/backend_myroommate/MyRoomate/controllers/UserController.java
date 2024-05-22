@@ -34,6 +34,12 @@ public class UserController {
         return currentUser;
     }
 
+    @GetMapping("/{userEmail}")
+    public User findByEmail(@PathVariable String userEmail){
+        User user = this.userService.findByEmail(userEmail);
+        return user;
+    }
+
     @PutMapping("/{userId}/bio")
     public ResponseEntity<User> editBio(@PathVariable long userId, @RequestBody @Validated editBioDTO payload) {
         User updatedUser = userService.editBio(userId, payload);

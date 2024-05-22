@@ -23,8 +23,8 @@ public record editRoomDTO(
         @NotEmpty(message = "Zip Code is mandatory")
         String zipCode,
 
-        @NotNull(message = "Price is mandatory")
-        int roommates,
+        @NotNull(message = "Bedrooms is mandatory")
+        int bedrooms,
 
         @NotEmpty(message = "Number of bathrooms is mandatory")
         int wc,

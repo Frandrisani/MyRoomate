@@ -2,6 +2,7 @@ package backend_myroommate.MyRoomate.service;
 import backend_myroommate.MyRoomate.entities.Room;
 import backend_myroommate.MyRoomate.entities.User;
 import backend_myroommate.MyRoomate.exceptions.NotFoundException;
+import backend_myroommate.MyRoomate.mailgun.MailgunSender;
 import backend_myroommate.MyRoomate.payloads.NewRoomDTO;
 import backend_myroommate.MyRoomate.payloads.editRoomDTO;
 import backend_myroommate.MyRoomate.repository.RoomDAO;
@@ -24,6 +25,9 @@ public class RoomService {
 
     @Autowired
     private Cloudinary cloudinary;
+
+    @Autowired
+    private MailgunSender mailgunSender;
 
     // CERCA ANNUNCI CON IL SUO ID
     public Room findById(long id) {
@@ -49,7 +53,7 @@ public class RoomService {
     // CREA UN NUOVO ANNUNCIO
     public Room createRoom(long userId, NewRoomDTO body) throws IOException {
         User user = userService.findById(userId);
-        Room room = new Room(body.title(), body.description(), body.price(), body.address(), body.city(), body.zipCode(), body.roommates(), body.wc(), body.type());
+        Room room = new Room(body.title(), body.description(), body.price(), body.address(), body.city(), body.zipCode(), body.bedrooms(), body.wc(), body.type());
         room.setUser(user);
         return this.roomDAO.save(room);
     }
@@ -63,7 +67,7 @@ public class RoomService {
         room.setAddress(payload.address());
         room.setCity(payload.city());
         room.setZipCode(payload.zipCode());
-        room.setRoommates(payload.roommates());
+        room.setBedrooms(payload.bedrooms());
         room.setWc(payload.wc());
         room.setType(payload.type());
         return this.roomDAO.save(room);
@@ -82,4 +86,5 @@ public class RoomService {
         Room room = findById(id);
         this.roomDAO.delete(room);
     }
+
 }
