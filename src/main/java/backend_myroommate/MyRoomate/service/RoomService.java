@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -74,10 +75,12 @@ public class RoomService {
     }
 
     // AGGIUNGI O MODIFICA IMMAGINE
-    public Room updateImage(long roomId, MultipartFile img ) throws IOException {
+    public Room updateImage(long roomId, MultipartFile img) throws IOException {
         Room found = this.findById(roomId);
         String url = (String) cloudinary.uploader().upload(img.getBytes(), ObjectUtils.emptyMap()).get("url");
-        found.setImage(url);
+        List<String> newImages = new ArrayList<>(found.getImages());
+        newImages.add(url);
+        found.setImages(newImages);
         return this.roomDAO.save(found);
     }
 

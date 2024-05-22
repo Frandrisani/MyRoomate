@@ -79,11 +79,14 @@ public class RoomController {
     }
 
     // AGGIUNGI O MODIFICA IMMAGINE
-    @PutMapping("/{roomId}/image")
-    public ResponseEntity<Room> updateRoomImage(@PathVariable long roomId,
-                                                @RequestParam("image") MultipartFile image) throws IOException {
-        Room updatedRoom = roomService.updateImage(roomId, image);
-        return ResponseEntity.ok(updatedRoom);
+    @PutMapping("/{roomId}/images")
+    public ResponseEntity<Room> updateRoomImages(@PathVariable long roomId,
+                                                 @RequestParam("images") List<MultipartFile> images) throws IOException {
+        Room room = roomService.findById(roomId);
+        for (MultipartFile image : images) {
+            room = roomService.updateImage(roomId, image);
+        }
+        return ResponseEntity.ok(room);
     }
 
     // CANCELLA ANNUNCIO

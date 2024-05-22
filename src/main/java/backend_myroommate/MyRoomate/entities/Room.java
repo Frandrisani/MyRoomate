@@ -35,7 +35,7 @@ public class Room {
     private int wc;
     @Enumerated(EnumType.STRING)
     private TypeRoom type;
-    private String image;
+    private List<String> images = new ArrayList<>();
 
     @ManyToOne
     @JoinColumn(name = "user_id")
